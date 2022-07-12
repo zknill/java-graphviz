@@ -8,6 +8,7 @@ import (
 type Node struct {
 	Name     string
 	Children []Node
+	Package  bool
 }
 
 func (n Node) GraphViz() []string {

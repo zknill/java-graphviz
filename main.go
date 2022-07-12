@@ -3,24 +3,19 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
 
 	"github.com/zknill/java-graphviz/parser"
 )
 
 func main() {
-	var file string
+	var dir string
+	var filter string
 
-	flag.StringVar(&file, "file", "", "filename to parse")
+	flag.StringVar(&dir, "dir", "", "directory to parse")
+	flag.StringVar(&filter, "filter", "", "package to filter by")
 	flag.Parse()
 
-	f, err := os.Open(file)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	d := parser.Parse(f)
+	d := parser.DirParser(dir, filter)
 
 	for _, line := range d.GraphViz() {
 		fmt.Println(line)

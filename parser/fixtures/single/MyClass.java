@@ -1,4 +1,4 @@
-package parser.fixtures;
+package parser.fixtures.single;
 
 import foo.bar.baz;
 
