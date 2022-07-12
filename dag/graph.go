@@ -12,7 +12,11 @@ type Node struct {
 	Root     bool
 }
 
-func (n Node) GraphViz() []string {
+type PrintOptions interface {
+	Color(Name string) string
+}
+
+func (n Node) GraphViz(opts PrintOptions) []string {
 	var out []string
 	id := n.id()
 
@@ -25,14 +29,14 @@ func (n Node) GraphViz() []string {
 
 		out = append(out, "}")
 	} else if !n.Root {
-		out = append(out, fmt.Sprintf("%s[label=%q]", id, n.Name))
+		out = append(out, fmt.Sprintf("%s[label=%q color=%s]", id, n.Name, opts.Color(n.Name)))
 		for _, c := range n.Children {
-			out = append(out, fmt.Sprintf("%s -> %s", id, c.id()))
+			out = append(out, fmt.Sprintf("%s -> %s [color=%s]", id, c.id(), opts.Color(n.Name)))
 		}
 	}
 
 	for _, c := range n.Children {
-		out = append(out, c.GraphViz()...)
+		out = append(out, c.GraphViz(opts)...)
 	}
 
 	return out
