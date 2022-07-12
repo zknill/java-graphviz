@@ -114,7 +114,7 @@ func DirParser(dirPath string, pkgFilter string) dag.Node {
 	}
 
 	return dag.Node{
-		Name:     "root",
+		Root:     true,
 		Children: packageNodes,
 	}
 }
